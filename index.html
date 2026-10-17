@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StudyResource | Centralized Academic Portal</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+        }
+    </script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="bg-slate-100 dark:bg-slate-950 text-slate-800 dark:text-slate-100 min-h-screen transition-colors duration-300 font-sans flex flex-col">
+    
+    <!-- TOP HEADER / NAVBAR -->
+    <header class="sticky top-0 z-30 bg-white/70 dark:bg-slate-900/60 backdrop-blur-md border-b border-slate-200 dark:border-slate-800 px-4 py-3 shadow-sm transition-colors duration-300">
+        <div class="max-w-7xl mx-auto flex items-center justify-between">
+            <div class="flex items-center space-x-3">
+                <i class="fa-solid fa-graduation-cap text-2xl text-blue-600 dark:text-blue-400"></i>
+                <h1 class="font-bold text-lg md:text-xl tracking-tight text-slate-900 dark:text-white">
+                    StudyResource <span class="hidden sm:inline-block text-xs font-normal text-slate-500 dark:text-slate-400">| Centralized Academic Portal</span>
+                </h1>
+            </div>
+            <div class="flex items-center space-x-2 sm:space-x-4">
+                <button onclick="toggleModal('shortcutsModal')" class="hidden sm:flex items-center space-x-1 px-3 py-1.5 text-xs font-medium rounded-xl border border-slate-300 dark:border-slate-700 bg-white/50 dark:bg-slate-800/50 hover:bg-slate-100 dark:hover:bg-slate-800 transition">
+                    <i class="fa-solid fa-bolt text-yellow-500"></i>
+                    <span>Shortcuts</span>
+                </button>
+                <button onclick="toggleDarkMode()" class="p-2 rounded-xl border border-slate-300 dark:border-slate-700 bg-white/50 dark:bg-slate-800/50 hover:bg-slate-100 dark:hover:bg-slate-800 transition" title="Toggle Light/Dark Mode">
+                    <i id="themeIcon" class="fa-solid fa-moon text-slate-700 dark:text-amber-300"></i>
+                </button>
+                <button onclick="toggleSidebar()" class="p-2 rounded-xl border border-slate-300 dark:border-slate-700 bg-white/50 dark:bg-slate-800/50 hover:bg-slate-100 dark:hover:bg-slate-800 transition" title="Settings / Sidebar">
+                    <i class="fa-solid fa-bars text-lg"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- SIDEBAR / SETTINGS OVERLAY -->
+    <div id="sidebarOverlay" class="fixed inset-0 bg-black/50 z-40 hidden backdrop-blur-sm" onclick="toggleSidebar()"></div>
+    <aside id="sidebar" class="fixed top-0 right-0 h-full w-80 bg-white dark:bg-slate-900 backdrop-blur-xl z-50 transform translate-x-full transition-transform duration-300 ease-in-out shadow-2xl border-l border-slate-200 dark:border-slate-800 flex flex-col">
+        <div class="p-4 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between">
+            <h2 class="font-bold text-lg flex items-center gap-2">
+                <i class="fa-solid fa-gear text-blue-600 dark:text-blue-400"></i> Settings & Control
+            </h2>
+            <button onclick="toggleSidebar()" class="text-slate-500 hover:text-slate-800 dark:text-slate-400 dark:hover:text-white">
+                <i class="fa-solid fa-xmark text-xl"></i>
+            </button>
+        </div>
+        <div class="p-4 flex-1 overflow-y-auto space-y-6">
+            <div class="bg-blue-50 dark:bg-blue-950/40 border border-blue-200 dark:border-blue-900/50 rounded-2xl p-4">
+                <h3 class="font-semibold text-blue-900 dark:text-blue-300 text-sm flex items-center gap-2 mb-2">
+                    <i class="fa-solid fa-user-shield"></i> Protected Teacher Portal
+                </h3>
+                <p class="text-xs text-slate-600 dark:text-slate-400 mb-3">
+                    Requires Security PIN to upload or manage subject modules.
+                </p>
+                <button onclick="promptTeacherAccess()" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-3 rounded-xl text-xs flex items-center justify-center gap-2 transition shadow">
+                    <i class="fa-solid fa-lock"></i> Unlock Teacher Portal
+                </button>
+            </div>
+            <div class="space-y-3">
+                <h3 class="text-xs font-semibold uppercase tracking-wider text-slate-400">Preferences</h3>
+                <div class="flex items-center justify-between p-2 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800/50">
+                    <span class="text-sm font-medium">Dark Mode</span>
+                    <button onclick="toggleDarkMode()" class="text-blue-600 dark:text-blue-400 flex items-center gap-2 text-xs font-semibold">
+                        <span id="themeTextLabel">Dark Mode</span>
+                        <i id="sidebarThemeIcon" class="fa-solid fa-moon text-lg"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="space-y-3">
+                <h3 class="text-xs font-semibold uppercase tracking-wider text-slate-400">Quick Navigation</h3>
+                <div class="space-y-1">
+                    <a href="#disaster-section" onclick="toggleSidebar()" class="block p-2 text-sm rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800">Disaster News & Weather</a>
+                    <a href="#quick-access" onclick="toggleSidebar()" class="block p-2 text-sm rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800">Academic Tools & Timer</a>
+                    <a href="#subjects-section" onclick="toggleSidebar()" class="block p-2 text-sm rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800">Academic Subjects</a>
+                </div>
+            </div>
+        </div>
+        <div class="p-4 border-t border-slate-200 dark:border-slate-800 text-xs text-center text-slate-400">
+            StudyResource v3.4 • Protected SHS Portal
+        </div>
+    </aside>
+
+    <main class="flex-1 max-w-7xl w-full mx-auto p-4 sm:p-6 space-y-8">
+        <!-- DISASTER BANNER -->
+        <section id="disaster-section" class="relative overflow-hidden rounded-3xl bg-gradient-to-r from-red-600 via-orange-600 to-amber-600 text-white p-5 sm:p-6 shadow-lg">
+            <div class="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-4">
+                <div class="space-y-2 max-w-3xl">
+                    <div class="inline-flex items-center space-x-2 bg-black/20 backdrop-blur-md px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-wider border border-white/10">
+                        <span class="w-2 h-2 rounded-full bg-yellow-300 animate-ping"></span>
+                        <i class="fa-solid fa-triangle-exclamation"></i>
+                        <span>PAGASA Weather Advisory</span>
+                    </div>
+                    <h2 class="text-xl sm:text-2xl font-bold">Disaster Preparedness Bulletin</h2>
+                    <p class="text-xs sm:text-sm text-amber-50 leading-relaxed">
+                        Active Tropical Cyclone / Depression Monitoring. Stay updated with severe weather guidelines and local announcements.
+                    </p>
+                </div>
+                <div class="flex flex-wrap gap-2 shrink-0">
+                    <button onclick="toggleModal('emergencyModal')" class="bg-white/20 hover:bg-white/30 backdrop-blur-md text-white text-xs font-semibold px-4 py-2.5 rounded-2xl border border-white/30 transition flex items-center gap-2 shadow">
+                        <i class="fa-solid fa-phone"></i> Emergency Hotlines
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- QUICK ACCESS ACADEMIC TOOLS -->
+        <section id="quick-access" class="space-y-4">
+            <div class="flex items-center justify-between">
+                <h2 class="text-lg sm:text-xl font-bold flex items-center gap-2">
+                    <i class="fa-solid fa-bolt text-blue-600 dark:text-blue-400"></i> Quick Access Academic Tools
+                </h2>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                
+                <!-- FOCUS TIMER -->
+                <div class="glass-card p-5 rounded-3xl shadow-sm flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center justify-between mb-3">
+                            <span class="text-xs font-bold uppercase tracking-wider text-blue-600 dark:text-blue-400 flex items-center gap-1.5">
+                                <i class="fa-solid fa-stopwatch"></i> Focus Timer
+                            </span>
+                            <span id="timerStatus" class="text-[10px] px-2.5 py-0.5 rounded-full bg-slate-200 dark:bg-slate-800 text-slate-600 dark:text-slate-300 font-medium">Ready</span>
+                        </div>
+                        <div class="text-center my-3">
+                            <div class="flex items-center justify-center gap-1">
+                                <input type="number" id="timerMinutesInput" value="25" min="1" max="180" onchange="updateTimerFromInput()" class="w-20 text-center text-3xl sm:text-4xl font-extrabold bg-transparent border-b-2 border-slate-300 dark:border-slate-700 focus:border-blue-500 focus:outline-none tracking-tight">
+                                <span class="text-3xl sm:text-4xl font-extrabold">:</span>
+                                <span id="timerSeconds" class="text-3xl sm:text-4xl font-extrabold tracking-tight">00</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="space-y-2">
+                        <div class="grid grid-cols-4 gap-1 mb-2">
+                            <button onclick="setTimerPreset(15)" class="text-[10px] py-1 bg-slate-200 dark:bg-slate-800 hover:bg-blue-100 dark:hover:bg-blue-900/40 rounded-xl transition">15m</button>
+                            <button onclick="setTimerPreset(25)" class="text-[10px] py-1 bg-slate-200 dark:bg-slate-800 hover:bg-blue-100 dark:hover:bg-blue-900/40 rounded-xl transition">25m</button>
+                            <button onclick="setTimerPreset(45)" class="text-[10px] py-1 bg-slate-200 dark:bg-slate-800 hover:bg-blue-100 dark:hover:bg-blue-900/40 rounded-xl transition">45m</button>
+                            <button onclick="setTimerPreset(60)" class="text-[10px] py-1 bg-slate-200 dark:bg-slate-800 hover:bg-blue-100 dark:hover:bg-blue-900/40 rounded-xl transition">60m</button>
+                        </div>
+                        <div class="flex gap-2">
+                            <button id="startTimerBtn" onclick="toggleTimer()" class="flex-1 bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 rounded-xl text-xs transition flex items-center justify-center gap-1 shadow">
+                                <i class="fa-solid fa-play"></i> Start
+                            </button>
+                            <button onclick="resetTimer()" class="px-3 bg-slate-200 dark:bg-slate-800 hover:bg-slate-300 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 font-medium py-2 rounded-xl text-xs transition">
+                                Reset
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- MULTI-CALCULATOR -->
+                <div class="glass-card p-5 rounded-3xl shadow-sm flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center justify-between mb-3">
+                            <span class="text-xs font-bold uppercase tracking-wider text-purple-600 dark:text-purple-400 flex items-center gap-1.5">
+                                <i class="fa-solid fa-calculator"></i> Multi-Calcu
+                            </span>
+                        </div>
+                        <p class="text-xs text-slate-600 dark:text-slate-300 mb-3">
+                            Scientific, Calculus, Quadratic, Physics, Bio Stats, GPA, & Converters.
+                        </p>
+                    </div>
+                    <button onclick="toggleModal('calculatorModal')" class="w-full bg-purple-600 hover:bg-purple-700 text-white font-medium py-2.5 rounded-2xl text-xs transition flex items-center justify-center gap-2 shadow">
+                        <i class="fa-solid fa-square-root-variable"></i> Open Multi-Calcu
+                    </button>
+                </div>
+
+                <!-- DEADLINES -->
+                <div class="glass-card p-5 rounded-3xl shadow-sm flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center justify-between mb-3">
+                            <span class="text-xs font-bold uppercase tracking-wider text-red-500 flex items-center gap-1.5">
+                                <i class="fa-solid fa-calendar-check"></i> Deadlines
+                            </span>
+                        </div>
+                        <div id="deadlinesList" class="space-y-2 max-h-32 overflow-y-auto pr-1">
+                            <!-- Populated dynamically -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SIMULATIONS -->
+                <div class="glass-card p-5 rounded-3xl shadow-sm flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center justify-between mb-3">
+                            <span class="text-xs font-bold uppercase tracking-wider text-emerald-500 flex items-center gap-1.5">
+                                <i class="fa-solid fa-globe"></i> Simulations
+                            </span>
+                        </div>
+                        <p class="text-xs text-slate-600 dark:text-slate-300 mb-3">
+                            PhET, Tinkercad, ChemCollective, and MolView visualizers.
+                        </p>
+                    </div>
+                    <button onclick="toggleModal('simulationsModal')" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-medium py-2.5 rounded-2xl text-xs transition flex items-center justify-center gap-2 shadow">
+                        <i class="fa-solid fa-arrow-up-right-from-square"></i> Open Simulations
+                    </button>
+                </div>
+
+                <!-- DAILY STUDY GOALS -->
+                <div class="glass-card p-5 rounded-3xl shadow-sm flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center justify-between mb-3">
+                            <span class="text-xs font-bold uppercase tracking-wider text-amber-500 flex items-center gap-1.5">
+                                <i class="fa-solid fa-bullseye"></i> Daily Study Goals
+                            </span>
+                            <span id="goalCountText" class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-amber-100 dark:bg-amber-500/20 text-amber-700 dark:text-amber-300">0/3 Done</span>
+                        </div>
+                        <p class="text-xs text-slate-600 dark:text-slate-300 mb-3">
+                            Track your daily targets and learning habits.
+                        </p>
+                    </div>
+                    <button onclick="toggleModal('goalModal')" class="w-full bg-amber-600 hover:bg-amber-700 text-white font-medium py-2.5 rounded-2xl text-xs transition flex items-center justify-center gap-2 shadow">
+                        <i class="fa-solid fa-list-check"></i> Open Goal Tracker
+                    </button>
+                </div>
+
+                <!-- RESEARCH HUB -->
+                <div class="glass-card p-5 rounded-3xl shadow-sm flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center justify-between mb-3">
+                            <span class="text-xs font-bold uppercase tracking-wider text-sky-600 dark:text-sky-400 flex items-center gap-1.5">
+                                <i class="fa-solid fa-book-atlas"></i> Research Links
+                            </span>
+                        </div>
+                        <p class="text-xs text-slate-600 dark:text-slate-300 mb-3">
+                            Direct references to Google Scholar, ResearchGate, & academic portals.
+                        </p>
+                    </div>
+                    <button onclick="toggleModal('researchHubModal')" class="w-full bg-sky-600 hover:bg-sky-700 text-white font-medium py-2.5 rounded-2xl text-xs transition flex items-center justify-center gap-2 shadow">
+                        <i class="fa-solid fa-graduation-cap"></i> Open Research Hub
+                    </button>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- SUBJECTS SECTION -->
+        <section id="subjects-section" class="space-y-4">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                <div>
+                    <h2 class="text-lg sm:text-xl font-bold flex items-center gap-2">
+                        <i class="fa-solid fa-book-bookmark text-blue-600 dark:text-blue-400"></i> Academic Resources & Subjects
+                    </h2>
+                    <p class="text-xs text-slate-500 dark:text-slate-400">Select a subject module to view lectures and uploaded materials.</p>
+                </div>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4" id="subjectsGrid">
+                <!-- Subject cards dynamically generated -->
+            </div>
+        </section>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="mt-auto bg-white/70 dark:bg-slate-900/60 backdrop-blur-md border-t border-slate-200 dark:border-slate-800 py-6 px-4 transition-colors duration-300">
+        <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500 dark:text-slate-400">
+            <div>
+                <p class="font-semibold text-slate-700 dark:text-slate-300">StudyResource | Centralized Academic Portal</p>
+                <p>Designed for Senior High School Academic Track Subjects</p>
+            </div>
+            <div class="flex items-center space-x-4">
+                <button onclick="toggleModal('emergencyModal')" class="hover:underline">Emergency Info</button>
+                <span>•</span>
+                <button onclick="promptTeacherAccess()" class="hover:underline text-blue-500"><i class="fa-solid fa-lock"></i> Teacher Access</button>
+            </div>
+        </div>
+    </footer>
+
+    <!-- SUBJECT DETAIL MODAL -->
+    <div id="subjectDetailModal" class="fixed inset-0 bg-black/70 z-50 hidden flex items-center justify-center p-4 backdrop-blur-sm">
+        <div class="bg-white dark:bg-slate-900 rounded-3xl max-w-2xl w-full max-h-[85vh] flex flex-col shadow-2xl overflow-hidden border border-slate-200 dark:border-slate-800">
+            <div class="p-4 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between bg-slate-50 dark:bg-slate-800/50">
+                <div class="flex items-center gap-3">
+                    <span id="modalSubjectCode" class="text-xs font-extrabold px-2.5 py-1 rounded-xl bg-blue-600 text-white">SUBJ</span>
+                    <h3 id="modalSubjectTitle" class="font-bold text-base sm:text-lg">Subject Title</h3>
+                </div>
+                <button onclick="toggleModal('subjectDetailModal')" class="text-slate-400 hover:text-slate-600 dark:hover:text-white">
+                    <i class="fa-solid fa-xmark text-xl"></i>
+                </button>
+            </div>
+            <div id="modalSubjectContent" class="p-5 flex-1 overflow-y-auto space-y-4">
+                <!-- Dynamic subject uploads -->
+            </div>
+            <div class="p-3 border-t border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-800/50 flex justify-between items-center text-xs text-slate-500">
+                <span>Subject Repository</span>
+                <button onclick="toggleModal('subjectDetailModal')" class="px-4 py-1.5 bg-slate-200 dark:bg-slate-800 hover:bg-slate-300 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 rounded-xl font-medium">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- TEACHER ACCESS AUTH PIN MODAL -->
+    <div id="pinAuthModal" class="fixed inset-0 bg-black/80 z-50 hidden flex items-center justify-center p-4 backdrop-blur-md">
+        <div class="bg-white dark:bg-slate-900 text-slate-800 dark:text-white rounded-3xl max-w-sm w-full p-6 shadow-2xl border border-slate-200 dark:border-slate-800 space-y-4 text-center">
+            <div class="w-12 h-12 bg-blue-100 dark:bg-blue-900/50 text-blue-600 dark:text-blue-400 rounded-full flex items-center justify-center mx-auto text-xl">
+                <i class="fa-solid fa-lock"></i>
+            </div>
+            <div>
+                <h3 class="font-bold text-base">Teacher Access Verification</h3>
+                <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">Enter your Security PIN to manage subject uploads.</p>
+            </div>
+            <form onsubmit="handlePinSubmit(event)" class="space-y-3">
+                <input type="password" id="teacherPinInput" placeholder="Enter PIN (Default: 2026)" class="w-full bg-slate-100 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-2xl p-2.5 text-center text-sm tracking-widest focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+                <div class="flex gap-2">
+                    <button type="button" onclick="toggleModal('pinAuthModal')" class="flex-1 py-2 bg-slate-200 dark:bg-slate-800 hover:bg-slate-300 dark:hover:bg-slate-700 rounded-2xl text-xs font-semibold">Cancel</button>
+                    <button type="submit" class="flex-1 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-2xl text-xs font-semibold shadow">Unlock</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- PROTECTED TEACHER UPLOAD MODAL -->
+    <div id="teacherModal" class="fixed inset-0 bg-black/70 z-50 hidden flex items-center justify-center p-4 backdrop-blur-sm">
+        <div class="bg-white dark:bg-slate-900 rounded-3xl max-w-lg w-full p-6 shadow-2xl border border-slate-200 dark:border-slate-800 space-y-4">
+            <div class="flex items-center justify-between pb-3 border-b border-slate-200 dark:border-slate-800">
+                <h3 class="font-bold text-lg flex items-center gap-2">
+                    <i class="fa-solid fa-cloud-arrow-up text-blue-600 dark:text-blue-400"></i> Teacher Upload Portal
+                </h3>
+                <button onclick="toggleModal('teacherModal')" class="text-slate-400 hover:text-slate-600 dark:hover:text-white">
+                    <i class="fa-solid fa-xmark text-xl"></i>
+                </button>
+            </div>
+            <form id="teacherUploadForm" onsubmit="handleTeacherUpload(event)" class="space-y-4">
+                <div>
+                    <label class="block text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-1">Target Subject</label>
+                    <select id="uploadSubjectCode" class="w-full bg-slate-100 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-2xl p-2.5 text-xs font-medium text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+                    </select>
+                </div>
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="block text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-1">Resource Type</label>
+                        <select id="uploadType" class="w-full bg-slate-100 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-2xl p-2.5 text-xs font-medium text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+                            <option value="Activity">Activity / Assignment</option>
+                            <option value="Lecture">Lecture Notes / PPT</option>
+                            <option value="Video">Video Material</option>
+                            <option value="File">Resource File / PDF</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-1">Title</label>
+                        <input type="text" id="uploadTitle" placeholder="e.g. Chapter 1 Quiz" class="w-full bg-slate-100 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-2xl p-2.5 text-xs text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+                    </div>
+                </div>
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="block text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-1">Resource Link / File URL</label>
+                        <input type="url" id="uploadLink" placeholder="https://drive.google.com/..." class="w-full bg-slate-100 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-2xl p-2.5 text-xs text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-1">Deadline Date (Optional)</label>
+                        <input type="date" id="uploadDeadline" class="w-full bg-slate-100 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-2xl p-2 text-xs text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-1">Instructions / Description</label>
+                    <textarea id="uploadDescription" rows="3" placeholder="Add instructions or details for students..." class="w-full bg-slate-100 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-2xl p-2.5 text-xs text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500"></textarea>
+                </div>
+                <div class="pt-2 flex justify-end gap-2">
+                    <button type="button" onclick="toggleModal('teacherModal')" class="px-4 py-2 bg-slate-200 dark:bg-slate-800 hover:bg-slate-300 dark:hover:bg-slate-700 border border-slate-300 dark:border-slate-700 text-slate-700 dark:text-slate-200 rounded-2xl text-xs font-semibold">Cancel</button>
+                    <button type="submit" class="px-5 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-2xl text-xs font-semibold shadow">Post to Module</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- DAILY STUDY GOALS MODAL -->
+    <div id="goalModal" class="fixed inset-0 bg-black/70 z-50 hidden flex items-center justify-center p-4 backdrop-blur-sm">
+        <div class="bg-white dark:bg-slate-900 text-slate-800 dark:text-white rounded-3xl max-w-md w-full p-6 shadow-2xl border border-slate-200 dark:border-slate-800 space-y-4">
+            <div class="flex items-center justify-between pb-3 border-b border-slate-200 dark:border-slate-800">
+                <h3 class="font-bold text-base flex items-center gap-2 text-amber-500">
+                    <i class="fa-solid fa-bullseye"></i> Daily Study Habit Tracker
+                </h3>
+                <button onclick="toggleModal('goalModal')" class="text-slate-400 hover:text-white"><i class="fa-solid fa-xmark text-xl"></i></button>
+            </div>
+            <div id="goalsListContainer" class="space-y-2.5 max-h-[50vh] overflow-y-auto pr-1"></div>
+            <form onsubmit="handleAddGoal(event)" class="flex gap-2 pt-2 border-t border-slate-200 dark:border-slate-800">
+                <input type="text" id="newGoalInput" placeholder="Add custom daily goal..." class="flex-1 bg-slate-100 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-2xl px-3 py-2 text-xs focus:outline-none focus:ring-2 focus:ring-amber-500" required>
+                <button type="submit" class="bg-amber-600 hover:bg-amber-700 text-white px-4 py-2 rounded-2xl text-xs font-semibold shadow">Add</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- RESEARCH HUB MODAL -->
+    <div id="researchHubModal" class="fixed inset-0 bg-black/70 z-50 hidden flex items-center justify-center p-4 backdrop-blur-sm">
+        <div class="bg-white dark:bg-slate-900 text-slate-800 dark:text-white rounded-3xl max-w-xl w-full p-5 sm:p-6 shadow-2xl border border-slate-200 dark:border-slate-800 space-y-4">
+            <div class="flex items-center justify-between pb-3 border-b border-slate-200 dark:border-slate-800">
+                <div class="flex items-center gap-2 text-sky-600 dark:text-sky-400 font-bold text-lg">
+                    <i class="fa-solid fa-book-atlas"></i>
+                    <h2>Research & Reference Links Hub</h2>
+                </div>
+                <button onclick="toggleModal('researchHubModal')" class="text-slate-400 hover:text-white"><i class="fa-solid fa-xmark text-xl"></i></button>
+            </div>
+            <div class="space-y-3 max-h-[60vh] overflow-y-auto pr-1">
+                <div class="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 flex items-center justify-between gap-3">
+                    <div>
+                        <h4 class="font-bold text-sm">Google Scholar</h4>
+                        <p class="text-xs text-slate-500 dark:text-slate-400">Search peer-reviewed papers, theses, and abstracts.</p>
+                    </div>
+                    <a href="https://scholar.google.com" target="_blank" class="shrink-0 px-3 py-2 bg-sky-600 hover:bg-sky-500 text-white text-xs font-semibold rounded-xl flex items-center gap-1.5 shadow">Visit <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i></a>
+                </div>
+                <div class="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 flex items-center justify-between gap-3">
+                    <div>
+                        <h4 class="font-bold text-sm">ResearchGate</h4>
+                        <p class="text-xs text-slate-500 dark:text-slate-400">Access scientific publications and connect with researchers.</p>
+                    </div>
+                    <a href="https://www.researchgate.net" target="_blank" class="shrink-0 px-3 py-2 bg-sky-600 hover:bg-sky-500 text-white text-xs font-semibold rounded-xl flex items-center gap-1.5 shadow">Visit <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i></a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MULTI-CALCULATOR MODAL -->
+    <div id="calculatorModal" class="fixed inset-0 bg-black/70 z-50 hidden flex items-center justify-center p-4 backdrop-blur-sm">
+        <div class="bg-white dark:bg-slate-900 rounded-3xl max-w-2xl w-full p-5 sm:p-6 shadow-2xl border border-slate-200 dark:border-slate-800 space-y-4 max-h-[90vh] flex flex-col">
+            <div class="flex items-center justify-between pb-3 border-b border-slate-200 dark:border-slate-800">
+                <div class="flex items-center gap-2 text-purple-600 dark:text-purple-400 font-bold text-lg">
+                    <i class="fa-solid fa-calculator"></i>
+                    <h2>All-In-One Academic Calculator Suite</h2>
+                </div>
+                <button onclick="toggleModal('calculatorModal')" class="text-slate-400 hover:text-slate-600 dark:hover:text-white"><i class="fa-solid fa-xmark text-xl"></i></button>
+            </div>
+            <div>
+                <select id="calcModeSelect" onchange="switchCalcMode(this.value)" class="w-full bg-slate-100 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-2xl p-2.5 text-xs font-bold text-slate-800 dark:text-white focus:outline-none">
+                    <option value="scientific">1. Scientific Calculator</option>
+                    <option value="gpa">2. Weighted Grade & GPA Calculator</option>
+                    <option value="unit">3. Unit Converter</option>
+                </select>
+            </div>
+            <div class="flex-1 overflow-y-auto space-y-4 pr-1">
+                <div id="calcPanel-scientific" class="space-y-3">
+                    <div class="bg-slate-100 dark:bg-slate-950 p-4 rounded-2xl text-right border border-slate-200 dark:border-slate-800">
+                        <div id="calcScreen" class="text-2xl font-mono font-bold tracking-wider truncate">0</div>
+                    </div>
+                    <div class="grid grid-cols-4 gap-2 text-sm font-semibold">
+                        <button onclick="calcClear()" class="p-3 bg-red-100 dark:bg-red-500/20 text-red-600 rounded-2xl">AC</button>
+                        <button onclick="calcAppend('/')" class="p-3 bg-blue-100 dark:bg-blue-500/20 text-blue-600 rounded-2xl">÷</button>
+                        <button onclick="calcAppend('*')" class="p-3 bg-blue-100 dark:bg-blue-500/20 text-blue-600 rounded-2xl">×</button>
+                        <button onclick="calcAppend('-')" class="p-3 bg-blue-100 dark:bg-blue-500/20 text-blue-600 rounded-2xl">-</button>
+                        <button onclick="calcAppend('7')" class="p-3 bg-slate-100 dark:bg-slate-800 rounded-2xl">7</button>
+                        <button onclick="calcAppend('8')" class="p-3 bg-slate-100 dark:bg-slate-800 rounded-2xl">8</button>
+                        <button onclick="calcAppend('9')" class="p-3 bg-slate-100 dark:bg-slate-800 rounded-2xl">9</button>
+                        <button onclick="calcAppend('+')" class="p-3 bg-blue-100 dark:bg-blue-500/20 text-blue-600 rounded-2xl">+</button>
+                        <button onclick="calcAppend('4')" class="p-3 bg-slate-100 dark:bg-slate-800 rounded-2xl">4</button>
+                        <button onclick="calcAppend('5')" class="p-3 bg-slate-100 dark:bg-slate-800 rounded-2xl">5</button>
+                        <button onclick="calcAppend('6')" class="p-3 bg-slate-100 dark:bg-slate-800 rounded-2xl">6</button>
+                        <button onclick="calcCompute()" class="p-3 bg-purple-600 text-white rounded-2xl row-span-2">=</button>
+                        <button onclick="calcAppend('1')" class="p-3 bg-slate-100 dark:bg-slate-800 rounded-2xl">1</button>
+                        <button onclick="calcAppend('2')" class="p-3 bg-slate-100 dark:bg-slate-800 rounded-2xl">2</button>
+                        <button onclick="calcAppend('3')" class="p-3 bg-slate-100 dark:bg-slate-800 rounded-2xl">3</button>
+                        <button onclick="calcAppend('0')" class="p-3 bg-slate-100 dark:bg-slate-800 rounded-2xl col-span-2">0</button>
+                        <button onclick="calcAppend('.')" class="p-3 bg-slate-100 dark:bg-slate-800 rounded-2xl">.</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SIMULATIONS MODAL -->
+    <div id="simulationsModal" class="fixed inset-0 bg-black/70 z-50 hidden flex items-center justify-center p-4 backdrop-blur-sm">
+        <div class="bg-white dark:bg-slate-900 text-slate-800 dark:text-white rounded-3xl max-w-xl w-full p-5 shadow-2xl border border-slate-200 dark:border-slate-800 space-y-4">
+            <div class="flex items-center justify-between pb-3 border-b border-slate-200 dark:border-slate-800">
+                <h2 class="font-bold text-lg text-blue-600 dark:text-blue-400"><i class="fa-solid fa-globe"></i> Educational Simulations</h2>
+                <button onclick="toggleModal('simulationsModal')" class="text-slate-400"><i class="fa-solid fa-xmark text-xl"></i></button>
+            </div>
+            <div class="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800 flex justify-between items-center">
+                <span>PhET Interactive Simulations</span>
+                <a href="https://phet.colorado.edu" target="_blank" class="px-3 py-1.5 bg-blue-600 text-white text-xs rounded-xl">Visit</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- EMERGENCY HOTLINES MODAL -->
+    <div id="emergencyModal" class="fixed inset-0 bg-black/70 z-50 hidden flex items-center justify-center p-4 backdrop-blur-sm">
+        <div class="bg-white dark:bg-slate-900 rounded-3xl max-w-md w-full p-5 shadow-2xl border border-slate-200 dark:border-slate-800 space-y-3">
+            <div class="flex justify-between items-center pb-2 border-b border-slate-200 dark:border-slate-800">
+                <h3 class="font-bold text-base text-red-500 dark:text-red-400">Disaster Emergency Hotlines</h3>
+                <button onclick="toggleModal('emergencyModal')" class="text-slate-400"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div class="text-xs space-y-2">
+                <div class="p-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 border flex justify-between"><span>NDRRMC Hotline</span> <strong>(02) 8911-1406</strong></div>
+                <div class="p-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 border flex justify-between"><span>PAGASA Weather Updates</span> <strong>(02) 8284-0800</strong></div>
+                <div class="p-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 border flex justify-between"><span>National Emergency Hotline</span> <strong>911</strong></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Custom JavaScript -->
+    <script src="script.js"></script>
+</body>
+</html>
