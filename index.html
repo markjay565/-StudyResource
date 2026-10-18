@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <html lang="en" class="dark">
 <head>
     <meta charset="UTF-8">
@@ -28,10 +27,6 @@
                 </h1>
             </div>
             <div class="flex items-center space-x-2 sm:space-x-4">
-                <button onclick="toggleModal('shortcutsModal')" class="hidden sm:flex items-center space-x-1 px-3 py-1.5 text-xs font-medium rounded-xl border border-slate-300 dark:border-slate-700 bg-white/50 dark:bg-slate-800/50 hover:bg-slate-100 dark:hover:bg-slate-800 transition">
-                    <i class="fa-solid fa-bolt text-yellow-500"></i>
-                    <span>Shortcuts</span>
-                </button>
                 <button onclick="toggleDarkMode()" class="p-2 rounded-xl border border-slate-300 dark:border-slate-700 bg-white/50 dark:bg-slate-800/50 hover:bg-slate-100 dark:hover:bg-slate-800 transition" title="Toggle Light/Dark Mode">
                     <i id="themeIcon" class="fa-solid fa-moon text-slate-700 dark:text-amber-300"></i>
                 </button>
@@ -85,7 +80,7 @@
             </div>
         </div>
         <div class="p-4 border-t border-slate-200 dark:border-slate-800 text-xs text-center text-slate-400">
-            StudyResource v3.5 • Protected SHS Portal
+            StudyResource v3.8 • Protected SHS Portal
         </div>
     </aside>
 
@@ -132,7 +127,7 @@
                         </div>
                         <div class="text-center my-3">
                             <div class="flex items-center justify-center gap-1">
-                                <input type="number" id="timerMinutesInput" value="25" min="1" max="180" onchange="updateTimerFromInput()" class="w-20 text-center text-3xl sm:text-4xl font-extrabold bg-transparent border-b-2 border-slate-300 dark:border-slate-700 focus:border-blue-500 focus:outline-none tracking-tight">
+                                <input type="text" id="timerMinutesInput" value="25" onchange="updateTimerFromInput()" class="w-20 text-center text-3xl sm:text-4xl font-extrabold bg-transparent border-b-2 border-slate-300 dark:border-slate-700 focus:border-blue-500 focus:outline-none tracking-tight">
                                 <span class="text-3xl sm:text-4xl font-extrabold">:</span>
                                 <span id="timerSeconds" class="text-3xl sm:text-4xl font-extrabold tracking-tight">00</span>
                             </div>
@@ -156,21 +151,21 @@
                     </div>
                 </div>
 
-                <!-- MULTI-CALCULATOR -->
+                <!-- DESMOS SCIENTIFIC CALCULATOR LINK -->
                 <div class="glass-card p-5 rounded-3xl shadow-sm flex flex-col justify-between">
                     <div>
                         <div class="flex items-center justify-between mb-3">
                             <span class="text-xs font-bold uppercase tracking-wider text-purple-600 dark:text-purple-400 flex items-center gap-1.5">
-                                <i class="fa-solid fa-calculator"></i> Multi-Calcu
+                                <i class="fa-solid fa-calculator"></i> Scientific Calculator
                             </span>
                         </div>
                         <p class="text-xs text-slate-600 dark:text-slate-300 mb-3">
-                            Scientific, Calculus, Quadratic, Physics, Bio Stats, GPA, & Converters.
+                            Advanced online scientific and graphing calculator powered by Desmos.
                         </p>
                     </div>
-                    <button onclick="toggleModal('calculatorModal')" class="w-full bg-purple-600 hover:bg-purple-700 text-white font-medium py-2.5 rounded-2xl text-xs transition flex items-center justify-center gap-2 shadow">
-                        <i class="fa-solid fa-square-root-variable"></i> Open Multi-Calcu
-                    </button>
+                    <a href="https://www.desmos.com/scientific" target="_blank" class="w-full bg-purple-600 hover:bg-purple-700 text-white font-medium py-2.5 rounded-2xl text-xs transition flex items-center justify-center gap-2 shadow">
+                        <i class="fa-solid fa-arrow-up-right-from-square"></i> Open Desmos Calculator
+                    </a>
                 </div>
 
                 <!-- DEADLINES -->
@@ -350,11 +345,11 @@
                 <div class="grid grid-cols-2 gap-3">
                     <div>
                         <label class="block text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-1">Resource Link / File URL</label>
-                        <input type="url" id="uploadLink" placeholder="https://drive.google.com/..." class="w-full bg-slate-100 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-2xl p-2.5 text-xs text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+                        <input type="text" id="uploadLink" placeholder="https://drive.google.com/..." class="w-full bg-slate-100 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-2xl p-2.5 text-xs text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500" required>
                     </div>
                     <div>
                         <label class="block text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-1">Deadline Date (Optional)</label>
-                        <input type="date" id="uploadDeadline" class="w-full bg-slate-100 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-2xl p-2 text-xs text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        <input type="text" id="uploadDeadline" placeholder="YYYY-MM-DD" class="w-full bg-slate-100 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-2xl p-2 text-xs text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500">
                     </div>
                 </div>
                 <div>
@@ -429,52 +424,6 @@
         </div>
     </div>
 
-    <!-- MULTI-CALCULATOR MODAL -->
-    <div id="calculatorModal" class="fixed inset-0 bg-black/70 z-50 hidden flex items-center justify-center p-4 backdrop-blur-sm">
-        <div class="bg-white dark:bg-slate-900 rounded-3xl max-w-2xl w-full p-5 sm:p-6 shadow-2xl border border-slate-200 dark:border-slate-800 space-y-4 max-h-[90vh] flex flex-col">
-            <div class="flex items-center justify-between pb-3 border-b border-slate-200 dark:border-slate-800">
-                <div class="flex items-center gap-2 text-purple-600 dark:text-purple-400 font-bold text-lg">
-                    <i class="fa-solid fa-calculator"></i>
-                    <h2>All-In-One Academic Calculator Suite</h2>
-                </div>
-                <button onclick="toggleModal('calculatorModal')" class="text-slate-400 hover:text-slate-600 dark:hover:text-white"><i class="fa-solid fa-xmark text-xl"></i></button>
-            </div>
-            <div>
-                <select id="calcModeSelect" onchange="switchCalcMode(this.value)" class="w-full bg-slate-100 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-2xl p-2.5 text-xs font-bold text-slate-800 dark:text-white focus:outline-none">
-                    <option value="scientific">1. Scientific Calculator</option>
-                    <option value="gpa">2. Weighted Grade & GPA Calculator</option>
-                    <option value="unit">3. Unit Converter</option>
-                </select>
-            </div>
-            <div class="flex-1 overflow-y-auto space-y-4 pr-1">
-                <div id="calcPanel-scientific" class="space-y-3">
-                    <div class="bg-slate-100 dark:bg-slate-950 p-4 rounded-2xl text-right border border-slate-200 dark:border-slate-800">
-                        <div id="calcScreen" class="text-2xl font-mono font-bold tracking-wider truncate">0</div>
-                    </div>
-                    <div class="grid grid-cols-4 gap-2 text-sm font-semibold">
-                        <button onclick="calcClear()" class="p-3 bg-red-100 dark:bg-red-500/20 text-red-600 rounded-2xl">AC</button>
-                        <button onclick="calcAppend('/')" class="p-3 bg-blue-100 dark:bg-blue-500/20 text-blue-600 rounded-2xl">÷</button>
-                        <button onclick="calcAppend('*')" class="p-3 bg-blue-100 dark:bg-blue-500/20 text-blue-600 rounded-2xl">×</button>
-                        <button onclick="calcAppend('-')" class="p-3 bg-blue-100 dark:bg-blue-500/20 text-blue-600 rounded-2xl">-</button>
-                        <button onclick="calcAppend('7')" class="p-3 bg-slate-100 dark:bg-slate-800 rounded-2xl">7</button>
-                        <button onclick="calcAppend('8')" class="p-3 bg-slate-100 dark:bg-slate-800 rounded-2xl">8</button>
-                        <button onclick="calcAppend('9')" class="p-3 bg-slate-100 dark:bg-slate-800 rounded-2xl">9</button>
-                        <button onclick="calcAppend('+')" class="p-3 bg-blue-100 dark:bg-blue-500/20 text-blue-600 rounded-2xl">+</button>
-                        <button onclick="calcAppend('4')" class="p-3 bg-slate-100 dark:bg-slate-800 rounded-2xl">4</button>
-                        <button onclick="calcAppend('5')" class="p-3 bg-slate-100 dark:bg-slate-800 rounded-2xl">5</button>
-                        <button onclick="calcAppend('6')" class="p-3 bg-slate-100 dark:bg-slate-800 rounded-2xl">6</button>
-                        <button onclick="calcCompute()" class="p-3 bg-purple-600 text-white rounded-2xl row-span-2">=</button>
-                        <button onclick="calcAppend('1')" class="p-3 bg-slate-100 dark:bg-slate-800 rounded-2xl">1</button>
-                        <button onclick="calcAppend('2')" class="p-3 bg-slate-100 dark:bg-slate-800 rounded-2xl">2</button>
-                        <button onclick="calcAppend('3')" class="p-3 bg-slate-100 dark:bg-slate-800 rounded-2xl">3</button>
-                        <button onclick="calcAppend('0')" class="p-3 bg-slate-100 dark:bg-slate-800 rounded-2xl col-span-2">0</button>
-                        <button onclick="calcAppend('.')" class="p-3 bg-slate-100 dark:bg-slate-800 rounded-2xl">.</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
     <!-- SIMULATIONS MODAL -->
     <div id="simulationsModal" class="fixed inset-0 bg-black/70 z-50 hidden flex items-center justify-center p-4 backdrop-blur-sm">
         <div class="bg-white dark:bg-slate-900 text-slate-800 dark:text-white rounded-3xl max-w-xl w-full p-5 sm:p-6 shadow-2xl border border-slate-200 dark:border-slate-800 space-y-4">
@@ -488,31 +437,31 @@
             <div class="space-y-3 max-h-[60vh] overflow-y-auto pr-1">
                 <div class="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 flex items-center justify-between gap-3">
                     <div>
-                        <h4 class="font-bold text-sm">PhET Chemistry & Physics Interactive Simulations</h4>
-                        <p class="text-xs text-slate-500 dark:text-slate-400">phet.colorado.edu</p>
+                        <h4 class="font-bold text-sm">PhET Chemistry & Physics Simulations</h4>
+                        <p class="text-xs text-slate-400">phet.colorado.edu</p>
                     </div>
-                    <a href="https://phet.colorado.edu" target="_blank" class="shrink-0 px-3 py-2 bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-semibold rounded-xl flex items-center gap-1.5 shadow">Visit <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i></a>
+                    <a href="https://phet.colorado.edu" target="_blank" class="shrink-0 px-3 py-2 bg-emerald-600 text-white text-xs font-semibold rounded-xl">Visit</a>
                 </div>
                 <div class="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 flex items-center justify-between gap-3">
                     <div>
-                        <h4 class="font-bold text-sm">Tinkercad (3D Modeling & Electronics Simulator)</h4>
-                        <p class="text-xs text-slate-500 dark:text-slate-400">tinkercad.com</p>
+                        <h4 class="font-bold text-sm">Tinkercad Simulator</h4>
+                        <p class="text-xs text-slate-400">tinkercad.com</p>
                     </div>
-                    <a href="https://www.tinkercad.com" target="_blank" class="shrink-0 px-3 py-2 bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-semibold rounded-xl flex items-center gap-1.5 shadow">Visit <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i></a>
+                    <a href="https://www.tinkercad.com" target="_blank" class="shrink-0 px-3 py-2 bg-emerald-600 text-white text-xs font-semibold rounded-xl">Visit</a>
                 </div>
                 <div class="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 flex items-center justify-between gap-3">
                     <div>
-                        <h4 class="font-bold text-sm">ChemCollective Virtual Chemistry Lab</h4>
-                        <p class="text-xs text-slate-500 dark:text-slate-400">chemcollective.org</p>
+                        <h4 class="font-bold text-sm">ChemCollective Virtual Lab</h4>
+                        <p class="text-xs text-slate-400">chemcollective.org</p>
                     </div>
-                    <a href="http://chemcollective.org" target="_blank" class="shrink-0 px-3 py-2 bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-semibold rounded-xl flex items-center gap-1.5 shadow">Visit <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i></a>
+                    <a href="http://chemcollective.org" target="_blank" class="shrink-0 px-3 py-2 bg-emerald-600 text-white text-xs font-semibold rounded-xl">Visit</a>
                 </div>
                 <div class="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 flex items-center justify-between gap-3">
                     <div>
-                        <h4 class="font-bold text-sm">MolView 3D Molecular Structure Visualizer</h4>
-                        <p class="text-xs text-slate-500 dark:text-slate-400">molview.org</p>
+                        <h4 class="font-bold text-sm">MolView 3D Molecular Visualizer</h4>
+                        <p class="text-xs text-slate-400">molview.org</p>
                     </div>
-                    <a href="https://molview.org" target="_blank" class="shrink-0 px-3 py-2 bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-semibold rounded-xl flex items-center gap-1.5 shadow">Visit <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i></a>
+                    <a href="https://molview.org" target="_blank" class="shrink-0 px-3 py-2 bg-emerald-600 text-white text-xs font-semibold rounded-xl">Visit</a>
                 </div>
             </div>
         </div>
@@ -522,18 +471,18 @@
     <div id="emergencyModal" class="fixed inset-0 bg-black/70 z-50 hidden flex items-center justify-center p-4 backdrop-blur-sm">
         <div class="bg-white dark:bg-slate-900 rounded-3xl max-w-md w-full p-5 shadow-2xl border border-slate-200 dark:border-slate-800 space-y-3">
             <div class="flex justify-between items-center pb-2 border-b border-slate-200 dark:border-slate-800">
-                <h3 class="font-bold text-base text-red-500 dark:text-red-400">Disaster Emergency Hotlines</h3>
+                <h3 class="font-bold text-base text-red-500">Disaster Emergency Hotlines</h3>
                 <button onclick="toggleModal('emergencyModal')" class="text-slate-400"><i class="fa-solid fa-xmark"></i></button>
             </div>
             <div class="text-xs space-y-2">
                 <div class="p-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 border flex justify-between"><span>NDRRMC Hotline</span> <strong>(02) 8911-1406</strong></div>
-                <div class="p-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 border flex justify-between"><span>PAGASA Weather Updates</span> <strong>(02) 8284-0800</strong></div>
-                <div class="p-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 border flex justify-between"><span>National Emergency Hotline</span> <strong>911</strong></div>
+                <div class="p-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 border flex justify-between"><span>PAGASA Updates</span> <strong>(02) 8284-0800</strong></div>
+                <div class="p-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 border flex justify-between"><span>Emergency Hotline</span> <strong>911</strong></div>
             </div>
         </div>
     </div>
 
-    <!-- MODERN CUSTOM TOAST NOTIFICATION -->
+    <!-- MODERN TOAST NOTIFICATION -->
     <div id="toastNotification" class="fixed bottom-5 right-5 z-50 transform translate-y-20 opacity-0 pointer-events-none transition-all duration-300 ease-out flex items-center gap-3 bg-slate-900/95 text-white border border-slate-800 px-5 py-3.5 rounded-2xl shadow-2xl backdrop-blur-md">
         <div id="toastIcon" class="w-8 h-8 rounded-xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center shrink-0">
             <i class="fa-solid fa-circle-check"></i>
