@@ -110,6 +110,7 @@ function handlePinSubmit(e) {
         input.value = '';
         toggleModal('pinAuthModal');
         toggleModal('teacherModal');
+        renderSubjects(); // Refresh UI to display delete buttons
         showToast("Teacher Access unlocked!", "Access Granted");
     } else {
         input.value = '';
@@ -185,11 +186,15 @@ function openSubjectModal(code) {
                 <div class="flex flex-wrap gap-3 pt-1 text-[11px]">
                     ${item.deadline ? `<span class="text-red-500 font-bold"><i class="fa-solid fa-calendar-day"></i> Due: ${item.deadline}</span>` : ''}
                 </div>
-                <div class="pt-2 flex justify-between items-center">
+                <div class="pt-3 border-t border-slate-200 dark:border-slate-700/50 flex justify-between items-center">
                     <a href="${item.link}" target="_blank" class="text-xs text-blue-600 dark:text-blue-400 font-semibold hover:underline inline-flex items-center gap-1">
                         <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i> Open Material
                     </a>
-                    ${isTeacherAuthenticated ? `<button onclick="deleteUpload('${code}',${index})" class="text-[11px] text-red-500 hover:underline">Delete Material</button>` : ''}
+                    ${isTeacherAuthenticated ? `
+                        <button onclick="deleteUpload('${code}',${index})" class="px-3 py-1 bg-red-500/10 hover:bg-red-500/20 text-red-500 border border-red-500/30 rounded-xl text-xs font-semibold transition flex items-center gap-1">
+                            <i class="fa-solid fa-trash-can text-[10px]"></i> Delete
+                        </button>
+                    ` : ''}
                 </div>
             `;
             container.appendChild(itemCard);
