@@ -88,7 +88,6 @@ function showToast(message, title = "Notification", isError = false) {
     }
 
     toast.classList.remove('translate-y-20', 'opacity-0', 'pointer-events-none');
-
     setTimeout(() => {
         toast.classList.add('translate-y-20', 'opacity-0', 'pointer-events-none');
     }, 3000);
@@ -365,18 +364,6 @@ function resetTimer() {
     document.getElementById('startTimerBtn').innerHTML = `<i class="fa-solid fa-play"></i> Start`;
     document.getElementById('timerStatus').innerText = "Ready";
     updateTimerFromInput();
-}
-
-// Calcu
-function switchCalcMode(mode) {}
-function calcAppend(val) {
-    let screen = document.getElementById('calcScreen');
-    screen.innerText = screen.innerText === "0" ? val : screen.innerText + val;
-}
-function calcClear() { document.getElementById('calcScreen').innerText = "0"; }
-function calcCompute() {
-    try { document.getElementById('calcScreen').innerText = eval(document.getElementById('calcScreen').innerText); }
-    catch { document.getElementById('calcScreen').innerText = "Error"; }
 }
 
 // UI Controls
