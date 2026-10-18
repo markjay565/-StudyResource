@@ -156,6 +156,7 @@ function openSubjectModal(code) {
     document.getElementById('modalSubjectTitle').innerText = subj.name;
     const container = document.getElementById('modalSubjectContent');
     container.innerHTML = '';
+    
     if (uploads.length === 0) {
         container.innerHTML = `
             <div class="py-12 text-center space-y-3">
